@@ -1,1 +1,103 @@
-<p>ver-pedido works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Pedido</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #6c63ff;
+        }
+
+        .order-details {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            margin-top: 2rem;
+        }
+
+        .order-details h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .order-details p {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        .back-btn {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .back-btn:hover {
+            background-color: #5a54e0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Detalles del Pedido</h1>
+
+        <!-- Detalles del pedido -->
+        <div class="order-details" id="order-details">
+            <h2>Pedido ID: <span id="order-id"></span></h2>
+            <p><strong>Cliente:</strong> <span id="client-name"></span></p>
+            <p><strong>Total:</strong> $<span id="order-total"></span></p>
+            <p><strong>Dirección de Envío:</strong> <span id="shipping-address"></span></p>
+            <p><strong>Estado del Pedido:</strong> <span id="order-status"></span></p>
+        </div>
+
+        <!-- Botón para volver a la lista de pedidos -->
+        <button class="back-btn" onclick="goBack()">Volver a la lista de pedidos</button>
+    </div>
+
+    <script>
+        // Simulando datos de un pedido
+        const order = {
+            id: 1,
+            client: 'Juan Pérez',
+            total: 200,
+            shippingAddress: 'Calle Ficticia 123, Ciudad',
+            status: 'Pendiente'
+        };
+
+        // Mostrar detalles del pedido
+        document.getElementById('order-id').innerText = order.id;
+        document.getElementById('client-name').innerText = order.client;
+        document.getElementById('order-total').innerText = order.total;
+        document.getElementById('shipping-address').innerText = order.shippingAddress;
+        document.getElementById('order-status').innerText = order.status;
+
+        // Función para volver a la lista de pedidos
+        function goBack() {
+            window.history.back();  // Esto hace que el navegador regrese a la página anterior (lista de pedidos)
+        }
+    </script>
+
+</body>
+</html>

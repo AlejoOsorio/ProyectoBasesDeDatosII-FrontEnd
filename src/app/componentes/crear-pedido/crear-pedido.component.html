@@ -1,1 +1,239 @@
-<p>crear-pedido works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Airsoft - Realizar Pedido</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 80%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Título principal */
+        h1 {
+            color: #6c63ff;
+        }
+
+        /* Estilos de productos */
+        .products, .cart {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .product, .cart-item {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product img, .cart-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product button, .remove-btn {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .product button:hover, .remove-btn:hover {
+            background-color: #5a54e0;
+        }
+
+        /* Estilos del carrito */
+        .cart {
+            margin-top: 2rem;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Estilo del formulario de pago */
+        .checkout-form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .checkout-form input {
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        .checkout-form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .checkout-form button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilos para el mensaje de éxito */
+        .success-message {
+            font-size: 1.2rem;
+            color: #28a745;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Tienda de Airsoft</h1>
+
+        <!-- Sección de productos -->
+        <div class="products">
+            <div class="product">
+                <img src="https://via.placeholder.com/150" alt="Arma Airsoft 1">
+                <h3>Arma Airsoft 1</h3>
+                <p>$100.00</p>
+                <button onclick="addToCart('Arma Airsoft 1', 100)">Añadir al Carrito</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/150" alt="Arma Airsoft 2">
+                <h3>Arma Airsoft 2</h3>
+                <p>$120.00</p>
+                <button onclick="addToCart('Arma Airsoft 2', 120)">Añadir al Carrito</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/150" alt="Arma Airsoft 3">
+                <h3>Arma Airsoft 3</h3>
+                <p>$150.00</p>
+                <button onclick="addToCart('Arma Airsoft 3', 150)">Añadir al Carrito</button>
+            </div>
+        </div>
+
+        <!-- Sección del carrito -->
+        <div class="cart">
+            <h2>Carrito de Compras</h2>
+            <div id="cart-items"></div>
+            <p class="cart-total">Total: $<span id="cart-total">0.00</span></p>
+            <button class="checkout-btn" onclick="checkout()">Finalizar Compra</button>
+        </div>
+
+        <!-- Formulario de pago (oculto inicialmente) -->
+        <div class="checkout-form" id="checkout-form" style="display: none;">
+            <h2>Formulario de Pago</h2>
+            <input type="text" id="name" placeholder="Nombre Completo" required>
+            <input type="text" id="address" placeholder="Dirección de Envío" required>
+            <input type="text" id="card" placeholder="Número de Tarjeta" required>
+            <button onclick="submitOrder()">Pagar</button>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <div class="success-message" id="success-message" style="display: none;">
+            <p>¡Gracias por tu compra! El pedido ha sido procesado exitosamente.</p>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(productName, productPrice) {
+            cart.push({ name: productName, price: productPrice });
+            total += productPrice;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = '';
+            cart.forEach((item, index) => {
+                cartItemsDiv.innerHTML += `
+                    <div class="cart-item">
+                        <p>${item.name} - $${item.price}</p>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">Eliminar</button>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            total -= cart[index].price;
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            document.getElementById('checkout-form').style.display = 'block';
+        }
+
+        function submitOrder() {
+            // Simulando el proceso de pago
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const card = document.getElementById('card').value;
+
+            if (name && address && card) {
+                // Aquí iría la lógica para procesar el pago y crear el pedido
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('checkout-form').style.display = 'none';
+                cart = [];
+                total = 0;
+                updateCart();
+            }
+        }
+    </script>
+</body>
+</html>
