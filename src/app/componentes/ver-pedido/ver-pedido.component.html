@@ -5,14 +5,14 @@
 
         <!-- Detalles del pedido -->
         <div class="order-details" id="order-details">
-            <h2>Pedido ID: {{pedido.id}}<span id="order-id"></span></h2>
-            <p><strong>Cliente: {{pedido.cliente}}</strong> <span id="client-name"></span></p>
+            <h2>Pedido ID: {{pedido?.id}}<span id="order-id"></span></h2>
+            <p><strong>Cliente: {{pedido?.cliente}}</strong> <span id="client-name"></span></p>
             <p><strong>Total:</strong> $<span id="order-total"></span></p>
             <p><strong>Dirección de Envío:</strong> <span id="shipping-address"></span></p>
             <p><strong>Estado del Pedido:</strong> <span id="order-status"></span></p>
         </div>
 
         <!-- Botón para volver a la lista de pedidos -->
-        <button class="back-btn" onclick="goBack()">Volver a la lista de pedidos</button>
+        <button class="back-btn" (click)="goBack()">Volver a la lista de pedidos</button>
     </div>
 </div>

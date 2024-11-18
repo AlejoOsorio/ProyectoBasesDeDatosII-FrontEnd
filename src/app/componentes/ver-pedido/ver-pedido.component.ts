@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { HeaderUsuarioComponent } from "../header-usuario/header-usuario.component";
 import { PedidosService } from '../../servicios/pedidos.service';
-import { PedidoDto } from '../../dto/pedido-dto';
+import { PedidoDTO } from '../../dto/pedido-dto';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ver-pedido',
@@ -12,10 +13,23 @@ import { PedidoDto } from '../../dto/pedido-dto';
 })
 export class VerPedidoComponent {
 
-  pedido: PedidoDto;
+  pedido: PedidoDTO | undefined;
+  idPedido: string;
 
-  constructor(private pedidosService: PedidosService) {
-    this.pedido = pedidosService.obtenerPedido('1') || { id: '1', cliente: 'pedro' };
+  constructor(private route: ActivatedRoute, private pedidosService: PedidosService) {
+    this.idPedido = '';
+    this.pedido = new PedidoDTO();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.idPedido = params["id-pedido"];
+      this.buscarPedido(this.idPedido);
+    });
+  }
+
+  public buscarPedido(idPedido: string) {
+    this.pedido = this.pedidosService.obtenerPedido(idPedido);
   }
 
   // Función para volver a la lista de pedidos

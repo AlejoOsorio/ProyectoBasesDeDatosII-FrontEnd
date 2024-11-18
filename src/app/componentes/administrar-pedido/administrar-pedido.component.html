@@ -16,13 +16,16 @@
             </thead>
             <tbody id="orders-table-body">
                 <!-- Los pedidos se agregarán dinámicamente aquí -->
-                @for (item of orders; track $index) {
-                <tr>
+                @for (item of pedidos; track $index) {
+                <tr class="tr-hover" role="button" routerLink="/ver-pedido/{{item.id}}">
                     <td>{{item.id}}</td>
-                    <td>{{item.client}}</td>
-                    <td>{{item.total}}</td>
+                    <td>{{item.cliente}}</td>
+                    <td>{{item.cliente}}</td>
                     <td>{{item.status}}</td>
-                    <td><button class="update-btn" (click)="viewOrder(item.id)">Actualizar</button></td>
+                    <td>
+                        <button class="update-btn mx-2" (click)="viewOrder(item.id); $event.stopPropagation()">Actualizar</button>
+                        <button class="remove-btn mx-2" (click)="showConfirmation(item.id); $event.stopPropagation()">Eliminar</button>
+                    </td>
                 </tr>
                 }
             </tbody>
@@ -30,20 +33,19 @@
 
         <!-- Detalles para actualizar pedido -->
 
-        @if (view_order) {
+        @if (viewPedido) {
         <div
             class="d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75">
             <div class="order-details" id="order-details">
                 <h2>Actualizar Pedido</h2>
-                <p><strong>Pedido ID: {{currentOrder.id}}</strong> <span id="order-id"></span></p>
-                <p><strong>Cliente: {{currentOrder.client}}</strong> <span id="client-name"></span></p>
-                <p><strong>Total: {{currentOrder.total}}</strong> $<span id="order-total"></span></p>
-                <p><strong>Dirección de Envío: {{currentOrder.shippingAddress}}</strong> <span
-                        id="shipping-address"></span></p>
+                <p><strong>Pedido ID: {{pedidoActual?.id}}</strong> <span id="order-id"></span></p>
+                <p><strong>Cliente: {{pedidoActual?.cliente}}</strong> <span id="client-name"></span></p>
+                <p><strong>Total: {{pedidoActual?.cliente}}</strong> $<span id="order-total"></span></p>
+                <p><strong>Dirección de Envío: {{pedidoActual?.status}}</strong> <span id="shipping-address"></span></p>
 
                 <div class="status-select">
                     <label for="order-status">Estado del Pedido:</label>
-                    <select [(ngModel)]="newStatus" name="status" id="order-status">
+                    <select [(ngModel)]="estadoNuevo" name="status" id="order-status">
                         <option value="Pendiente">Pendiente</option>
                         <option value="Enviado">Enviado</option>
                         <option value="Cancelado">Cancelado</option>
@@ -53,6 +55,16 @@
                 <!-- Botón para actualizar estado -->
                 <button class="update-status-btn m-2" (click)="updateOrderStatus()">Actualizar Estado</button>
                 <button class="back-btn m-2" (click)="goBack()">Volver a la lista de pedidos</button>
+            </div>
+        </div>
+        }
+        <!-- Popup de confirmación -->
+        @if (viewConfirmation) {
+        <div id="confirmation-popup" class="confirmation-popup">
+            <div class="confirmation-box">
+                <p>¿Estás seguro de que deseas eliminar este pedido?</p>
+                <button class="cancel-btn" (click)="closeConfirmation()">Cancelar</button>
+                <button class="confirm-btn" (click)="confirmDelete()">Eliminar</button>
             </div>
         </div>
         }

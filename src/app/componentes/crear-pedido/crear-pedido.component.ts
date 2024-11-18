@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProductoDto } from '../../dto/producto-dto';
+import { ArmaDTO } from '../../dto/arma-dto';
 import { ProductoService } from '../../servicios/producto.service';
 import { HeaderUsuarioComponent } from '../header-usuario/header-usuario.component';
 import { FormsModule } from '@angular/forms';
+import { PedidosService } from '../../servicios/pedidos.service';
+import { PedidoDTO } from '../../dto/pedido-dto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-pedido',
@@ -14,21 +17,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrearPedidoComponent {
 
-  productos: ProductoDto[];
-  cart: ProductoDto[];
+  productos: ArmaDTO[];
+  cart: ArmaDTO[];
   total = 0;
   viewCheckout: boolean;
   showCart: boolean;
   succesMessage: boolean;
-  formularioPago: {nombre: string, direccion: string, tarjeta: string};
+  formularioPago: { nombre: string, direccion: string, tarjeta: string };
 
-  constructor(private productoService: ProductoService) {
+  constructor(private pedidoService: PedidosService, private productoService: ProductoService) {
     this.productos = [];
     this.cart = [];
     this.viewCheckout = false;
     this.showCart = false;
     this.succesMessage = false;
-    this.formularioPago = {nombre: '', direccion: '', tarjeta: ''};
+    this.formularioPago = { nombre: '', direccion: '', tarjeta: '' };
     this.listarProductos();
   }
 
@@ -37,9 +40,10 @@ export class CrearPedidoComponent {
   }
 
 
-  public addToCart(producto: ProductoDto) {
+  public addToCart(producto: ArmaDTO) {
     this.cart.push(producto);
     this.total += parseInt(producto.precio);
+    this.showModal();
   }
 
   public removeFromCart(index: number) {
@@ -56,10 +60,19 @@ export class CrearPedidoComponent {
 
     if (this.formularioPago.nombre && this.formularioPago.direccion && this.formularioPago.tarjeta) {
       // Aquí iría la lógica para procesar el pago y crear el pedido
+      this.pedidoService.crearPedido(new PedidoDTO('5', 'Ramon'));
       this.succesMessage = true;
       this.viewCheckout = false;
       this.cart = [];
       this.total = 0;
     }
+  }
+
+  showModal() {
+    Swal.fire(
+      '¡Exito!',
+      'Se agrego correctamente al carrito',
+      'success'
+    );
   }
 }

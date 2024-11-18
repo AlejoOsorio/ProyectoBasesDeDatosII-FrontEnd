@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ProductoDto } from '../dto/producto-dto';
+import { ArmaDTO } from '../dto/arma-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  productos: ProductoDto[];
+  productos: ArmaDTO[];
 
   constructor() {
     this.productos = [];
     this.productos.push(
-      new ProductoDto('AK', '1000'),
-      new ProductoDto('AK-47', '2000'),
-      new ProductoDto('AK-52', '3000'),
-      new ProductoDto('AK-36', '4000'),
-      new ProductoDto('AK-38', '5000'),
+      new ArmaDTO('AK', '1000'),
+      new ArmaDTO('AK-47', '2000'),
+      new ArmaDTO('AK-52', '3000'),
+      new ArmaDTO('AK-36', '4000'),
+      new ArmaDTO('AK-38', '5000'),
     );
   }
 
-  public listar(): ProductoDto[] {
+  public listar(): ArmaDTO[] {
     return this.productos;
   }
 
-  public obtener(codigo: string): ProductoDto | undefined {
+  public obtener(codigo: string): ArmaDTO | undefined {
     return this.productos.find(producto => producto.nombre == codigo);
   }
 }

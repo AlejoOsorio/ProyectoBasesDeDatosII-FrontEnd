@@ -56,6 +56,50 @@ h1 {
     background-color: #218838;
 }
 
+.tr-hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .tr-hover:hover {
+    background-color: #e6f3ff;
+    color: #0000ff;
+  }
+
+.remove-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Estilo de confirmación de eliminación */
+.confirmation-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    width: 400px;
+}
+
 /* Formulario para actualizar pedido */
 .order-details {
     background-color: #fff;
@@ -64,6 +108,33 @@ h1 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 60%;
     margin-top: 2rem;
+}
+
+.confirmation-box p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.confirmation-box button {
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.confirmation-box .cancel-btn {
+    background-color: #ccc;
+}
+
+.confirmation-box .confirm-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.confirmation-box button:hover {
+    opacity: 0.9;
 }
 
 .order-details h2 {

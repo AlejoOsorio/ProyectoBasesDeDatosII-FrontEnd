@@ -1,35 +1,39 @@
 import { Injectable } from '@angular/core';
-import { PedidoDto } from '../dto/pedido-dto';
+import { PedidoDTO } from '../dto/pedido-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidosService {
 
-  pedidos: PedidoDto[];
+  pedidos: PedidoDTO[];
 
   constructor() {
     this.pedidos = [];
     this.pedidos.push(
-      new PedidoDto('1', 'Arturo'),
-      new PedidoDto('2', 'Mario'),
-      new PedidoDto('3', 'Juan'),
-      new PedidoDto('4', 'Alfonso'),
-      new PedidoDto('5', 'Ramno'),
-      new PedidoDto('5', 'Pepe'),
-      new PedidoDto('5', 'Nicolas')
+      new PedidoDTO('1', 'Arturo', 'Pendiente'),
+      new PedidoDTO('2', 'Mario', 'Enviado'),
+      new PedidoDTO('3', 'Juan', 'Cancelado'),
+      new PedidoDTO('4', 'Alfonso', 'Pendiente'),
+      new PedidoDTO('5', 'Ramno','Pendiente'),
+      new PedidoDTO('6', 'Pepe', 'Pendiente'),
+      new PedidoDTO('7', 'Nicolas', 'Pendiente')
     );
   }
 
-  public listar(): PedidoDto[] {
+  public listar(): PedidoDTO[] {
     return this.pedidos;
   }
 
-  public listarPedidosVendedor(idVendedor: string): PedidoDto[] {
+  public listarPedidosVendedor(idVendedor: string): PedidoDTO[] {
     return this.pedidos.filter( pedido => pedido.id === idVendedor);
   }
 
-  public obtenerPedido(idPedido: string): PedidoDto | undefined{
+  public obtenerPedido(idPedido: string): PedidoDTO | undefined{
     return this.pedidos.find( pedido => pedido.id == idPedido);
+  }
+
+  public crearPedido(pedido: PedidoDTO) {
+    this.pedidos.push(pedido);
   }
 }

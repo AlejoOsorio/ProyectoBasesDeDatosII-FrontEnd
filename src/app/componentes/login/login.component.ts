@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoginDto } from '../../dto/login-dto';
+import { LoginDTO } from '../../dto/login-dto';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -13,10 +13,10 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginComponent {
 
-  loginDto: LoginDto;
+  loginDto: LoginDTO;
 
   constructor() {
-    this.loginDto = new LoginDto;
+    this.loginDto = new LoginDTO;
   }
 
   public iniciarSesion() {
