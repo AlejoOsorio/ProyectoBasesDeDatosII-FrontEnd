@@ -6,7 +6,7 @@ import { HeaderUsuarioComponent } from '../header-usuario/header-usuario.compone
 import { FormsModule } from '@angular/forms';
 import { PedidosService } from '../../servicios/pedidos.service';
 import { PedidoDTO } from '../../dto/pedido-dto';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-pedido',
@@ -43,7 +43,7 @@ export class CrearPedidoComponent {
   public addToCart(producto: ArmaDTO) {
     this.cart.push(producto);
     this.total += parseInt(producto.precio);
-    this.showModal();
+    this.showModal('¡Exito!', 'Se agrego correctamente al carrito', 'success');
   }
 
   public removeFromCart(index: number) {
@@ -65,14 +65,11 @@ export class CrearPedidoComponent {
       this.viewCheckout = false;
       this.cart = [];
       this.total = 0;
+      this.showModal('¡Exito!', 'Compra realizada correctamente', 'success');
     }
   }
 
-  showModal() {
-    Swal.fire(
-      '¡Exito!',
-      'Se agrego correctamente al carrito',
-      'success'
-    );
+  showModal(title: string, message: string, type: SweetAlertIcon) {
+    Swal.fire(title, message, type);
   }
 }
