@@ -8,7 +8,7 @@ import { ArmaDTO } from '../dto/arma-dto';
 })
 export class ArmaService {
 
-  private pulicoURL = "http.//localhost:8080"
+  private pulicoURL = "http://localhost:8082"
 
   constructor(private http: HttpClient) { }
 
